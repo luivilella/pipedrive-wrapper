@@ -23,7 +23,7 @@ remove: ## Rmove all containers
 	docker-compose down
 
 test: ## Run tests inside stoodi project
-	docker-compose exec app python manage.py test
+	docker-compose exec app pytest
 
 restart: ## Restart all containers
 	docker-compose restart

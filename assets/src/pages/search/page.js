@@ -2,10 +2,13 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import Vue from 'vue';
 import VueResource from 'vue-resource';
 import VueRouter from 'vue-router';
-import OrganizationService from '../../services/organization';
 
 import { ScaleLoader } from 'vue-spinner/dist/vue-spinner.min.js';
 import debounce from 'debounce';
+
+import { ORGANIZATION_DETAIL, ORGANIZATION_CREATE } from '../../utils/urls';
+import OrganizationService from '../../services/organization';
+
 
 Vue.use(VueResource);
 Vue.use(VueRouter);
@@ -35,7 +38,8 @@ var app = new Vue({
     service: null,
     organizations: [],
     searchString: '',
-    organization_page: '/dist/build/organization'
+    detail_page: ORGANIZATION_DETAIL,
+    create_page: ORGANIZATION_CREATE,
   },
   methods: {
     searchInput(element) {

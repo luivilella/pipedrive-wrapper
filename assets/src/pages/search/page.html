@@ -27,12 +27,15 @@
                 <div class="card-header">
                     <div class="col text-right">
                         <a
-                            v-bind:href="organization_page"
+                            v-bind:href="create_page"
                             class="btn btn-secondary btn-sm"
                             role="button"
                             aria-disabled="true"
                         >Create New</a>
                     </div>
+                </div>
+                <div class="card-header" v-if="loading">
+                    <scale-loader :loading="loading"></scale-loader>
                 </div>
                 <div class="card-body">
                     <table class="table">
@@ -46,14 +49,13 @@
                         <tbody>
                             <tr  v-for="org in organizations">
                                 <td>
-                                    <a v-bind:href="organization_page+'?id='+org.id">{{org.name}}</a>
+                                    <a v-bind:href="detail_page+'?id='+org.id">{{org.name}}</a>
                                 </td>
                                 <td>{{org.cc_email}}</td>
                                 <td>{{org.address_formatted_address}}</td>
                             </tr>
                         </tbody>
                     </table>
-                    <scale-loader :loading="loading"></scale-loader>
                 </div>
             </div>
         </div>

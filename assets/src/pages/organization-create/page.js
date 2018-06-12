@@ -8,6 +8,7 @@ import { ScaleLoader } from 'vue-spinner/dist/vue-spinner.min.js';
 
 import OrganizationService from '../../services/organization';
 import Validate from '../../utils/validator';
+import { ORGANIZATION_CREATE } from '../../utils/urls';
 
 Vue.use(VueResource);
 Vue.use(VueRouter);
@@ -127,7 +128,7 @@ var app = new Vue({
         response => {
           let organization_id = response.data.id;
           window.location.href = (
-            `/dist/build/organization-detail/?id=${organization_id}`
+            `${ORGANIZATION_CREATE}/?id=${organization_id}`
           );
         },
         response_error => {
