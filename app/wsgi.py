@@ -4,7 +4,7 @@ from bottle import run
 from dotenv import load_dotenv, find_dotenv
 load_dotenv(find_dotenv())
 
-from wep_api import app
+from web_api import app
 
 application = app
 
