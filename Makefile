@@ -15,6 +15,17 @@ build: ## Build images and run the containers
 
 up: ## Start containers and run the project in dev mode
 	docker-compose start
+	docker-compose exec assets yarn build:prod
+	docker-compose exec app uwsgi --socket 0.0.0.0:8080 --workers 4 --protocol=http -w wsgi
+
+up-debug: ## Start containers and debug the project in dev mode
+	docker-compose start
+	docker-compose exec assets yarn build
+	docker-compose exec app python wsgi.py
+
+assets-watch:
+	docker-compose start
+	docker-compose exec assets yarn build:watch
 
 down: ## Stop containers
 	docker-compose stop
@@ -22,13 +33,16 @@ down: ## Stop containers
 remove: ## Rmove all containers
 	docker-compose down
 
-test: ## Run tests inside stoodi project
+test: ## Run tests inside
 	docker-compose exec app pytest
 
 restart: ## Restart all containers
 	docker-compose restart
 
-logs: ## Run tests inside stoodi project
+logs: ## Run tests inside
 	docker-compose logs -f --tail=100
+
+cmd: ## Run a command line inside
+	docker-compose exec app /bin/bash
 
 .DEFAULT_GOAL := help
