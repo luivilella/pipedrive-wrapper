@@ -6,6 +6,8 @@ from utils.ip_info import get_ip_info
 
 env = Env()
 GEOLOCATION_BACKEND_SORT = env.bool('GEOLOCATION_BACKEND_SORT', False)
+HTTP_REMOTE_ADDR = env('HTTP_REMOTE_ADDR', 'REMOTE_ADDR')
+
 
 service = PipeDriveOrganizationService()
 app = Bottle()
@@ -19,8 +21,9 @@ def search():
     if getsort:
         lat, lng = getsort.split(',')
         geolocation_sort = (float(lat), float(lng))
-    elif GEOLOCATION_BACKEND_SORT:
-        ip_info = get_ip_info(request.environ.get('REMOTE_ADDR'))
+
+    if not geolocation_sort and GEOLOCATION_BACKEND_SORT:
+        ip_info = get_ip_info(request.environ.get(HTTP_REMOTE_ADDR))
         lat, lng = ip_info.get('lat'), ip_info.get('lon')
         if lat is not None and lng is not None:
             geolocation_sort = (lat, lng)
@@ -32,7 +35,7 @@ def search():
         response.status = 400
         return dict(success=False, error=str(e))
 
-    return dict(success=True, data=organizations)
+    return dict(success=True, data=list(organizations))
 
 
 @app.route('/organizations', method='POST')
