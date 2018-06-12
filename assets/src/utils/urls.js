@@ -1,4 +1,4 @@
-const ORGANIZATION_CREATE = 'organization-create';
+const ORGANIZATION_CREATE = '/organization-create';
 const ORGANIZATION_DETAIL = '/organization-detail';
 const ORGANIZATION_SEARCH = '/';
 
