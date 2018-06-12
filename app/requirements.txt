@@ -1,3 +1,4 @@
+bottle==0.12.13
 geopy==1.14.0
 requests==2.18.4
 environs==2.1.1
