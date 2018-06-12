@@ -1,0 +1,15 @@
+version: '3'
+
+services:
+    app:
+      container_name: dc-pipedrive-app
+      build:
+        dockerfile: ../docker/app/Dockerfile
+        context: ./app
+      command: ['uwsgi', '--socket', '0.0.0.0:8080', '--workers', '4', '--protocol=http', '-w', 'wsgi']
+      ports:
+        - '8080:8080'
+      volumes:
+        - ./app:/deploy
+      working_dir: /deploy
+

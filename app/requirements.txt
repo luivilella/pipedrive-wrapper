@@ -4,3 +4,4 @@ requests==2.18.4
 environs==2.1.1
 python-dotenv==0.8.2
 pytest==3.6.1
+uWSGI==2.0.17
