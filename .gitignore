@@ -2,3 +2,6 @@
 **/*.pyc
 **/.pytest_cache
 app/.env
+assets/node_modules
+assets/dist
+

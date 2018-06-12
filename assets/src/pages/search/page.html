@@ -1,0 +1,61 @@
+<!doctype html>
+
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>PipeDrive Search</title>
+    </head>
+    <body>
+        <div id="search">
+            <div class="alert alert-danger" role="alert" v-if="error">
+                <strong>Error: </strong>{{error}}
+            </div>
+            <div class="card">
+                <div class="card-header">
+                    <label for="search-input" class="col-2 col-form-label">Search</label>
+                    <div class="col-10">
+                        <input
+                            class="form-control"
+                            type="search"
+                            placeholder="Search by company name"
+                            id="search-input"
+                            v-bind:value="searchString"
+                            v-on:input="searchInput"
+                        >
+                    </div>
+                </div>
+                <div class="card-header">
+                    <div class="col text-right">
+                        <a
+                            v-bind:href="organization_page"
+                            class="btn btn-secondary btn-sm"
+                            role="button"
+                            aria-disabled="true"
+                        >Create New</a>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Email</th>
+                                <th>Address</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr  v-for="org in organizations">
+                                <td>
+                                    <a v-bind:href="organization_page+'?id='+org.id">{{org.name}}</a>
+                                </td>
+                                <td>{{org.cc_email}}</td>
+                                <td>{{org.address_formatted_address}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <scale-loader :loading="loading"></scale-loader>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

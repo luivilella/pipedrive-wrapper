@@ -1,0 +1,33 @@
+<!doctype html>
+
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>PipeDrive Organization</title>
+    </head>
+    <body>
+        <div id="organization-detail">
+            <div class="alert alert-danger" role="alert" v-if="error">
+                <strong>Error: </strong>{{error}}
+            </div>
+            <scale-loader :loading="loading"></scale-loader>
+            <div class="container">
+                <div class="card">
+                    <div class="card-header">
+                        <h3>{{organization.name}}</h3>
+                    </div>
+                    <div class="card-body">
+                        <table class="table">
+                            <tbody>
+                                <tr  v-for="field in fields">
+                                    <td>{{field.name}}</td>
+                                    <td>{{field.value}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

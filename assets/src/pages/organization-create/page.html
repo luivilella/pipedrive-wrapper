@@ -1,0 +1,118 @@
+<!doctype html>
+
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>PipeDrive Organization</title>
+    </head>
+    <body>
+        <div id="organization-create">
+            <div class="alert alert-danger" role="alert" v-if="error">
+                <strong>Error: </strong>{{error}}
+            </div>
+            <div class="container">
+                <div class="card">
+                    <div class="card-header">
+                        <h3>{{title}}</h3>
+                    </div>
+                    <div class="card-body">
+                        <form>
+                            <div v-for="field in fields">
+                                <div class="form-group">
+                                    <label v-bind:for="field.name">{{field.name}}</label>
+
+                                    <input v-if="isTextInput(field.field_type)"
+                                        type="text"
+                                        class="form-control"
+                                        v-bind:id="field.name"
+                                        v-bind:name="field.name"
+                                        v-model="field.value"
+                                    >
+
+                                    <textarea v-if="isTextAreaInput(field.field_type)"
+                                        class="form-control"
+                                        rows="3"
+                                        v-bind:id="field.name"
+                                        v-bind:name="field.name"
+                                        v-model="field.value"
+                                    ></textarea>
+
+                                    <datepicker v-if="isDatePickerInput(field.field_type)"
+                                        v-bind:id="field.name"
+                                        v-bind:name="field.name"
+                                        format='MM/dd/yyyy'
+                                        v-model="field.value"
+                                    ></datepicker>
+
+                                    <div class="form-inline" v-if="isAddressInput(field.field_type)">
+                                        <input
+                                            type="text"
+                                            class="form-control mb-2 mr-sm-2 mb-sm-0"
+                                            placeholder="Latitude"
+                                            v-model="field.value.lat"
+                                        >
+                                        <input
+                                            type="text"
+                                            class="form-control mb-2 mr-sm-2 mb-sm-0"
+                                            placeholder="Longitude"
+                                            v-model="field.value.lng"
+                                        >
+                                    </div>
+
+                                    <small
+                                        class="form-text text-danger"
+                                        v-for="error in field.errors"
+                                    >{{error}}</small>
+                                </div>
+                            </div>
+                            <hr class="separator">
+                            <h6>Add New Fields</h6>
+                            <hr class="separator">
+
+                            <div class="form-inline">
+
+                                <label class="sr-only" for="inlineFormInput">New Field</label>
+                                <input
+                                    type="text"
+                                    class="form-control mb-2 mr-sm-2 mb-sm-0"
+                                    id="inlineFormInput"
+                                    placeholder="New Field Name"
+                                    v-model="newField.name"
+                                >
+                                <select
+                                    class="custom-select"
+                                    v-model="newField.type"
+                                >
+                                    <option hidden value="-">Field Type</option>
+                                    <option value="varchar_auto">Text</option>
+                                    <option value="text">Textarea</option>
+                                    <option value="date">Date</option>
+                                </select>
+                                <div class="col text-right">
+                                    <button
+                                        type="button"
+                                        class="btn btn-link"
+                                        v-bind:disabled="!isNewFieldValid()"
+                                        v-on:click="addNewField()"
+                                    >Add Field</button>
+                                </div>
+                            </div>
+
+                            <hr class="separator">
+                            <scale-loader :loading="loading"></scale-loader>
+
+                            <div class="col text-right">
+                                <button
+                                    v-bind:disabled="loading"
+                                    type="button"
+                                    class="btn btn-primary"
+                                    v-on:click="submit()"
+                                >Submit</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>
