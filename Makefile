@@ -8,6 +8,8 @@ help: ## This help.
 build: ## Build images and run the containers
 	cp app/.env.template app/.env
 	vi app/.env
+	cp docker/nginx/nginx.conf.template docker/nginx/nginx.conf
+	vi docker/nginx/nginx.conf
 	docker-compose build
 	docker-compose up -d
 

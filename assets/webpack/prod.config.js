@@ -48,4 +48,6 @@ webpackConfig.module.rules.push({
     loader: WebpackStrip.loader('console.log', 'debugger')
 });
 
+webpackConfig.output.publicPath = '/assets/';
+
 module.exports = webpackConfig;

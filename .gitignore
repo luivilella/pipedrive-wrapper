@@ -4,4 +4,5 @@
 app/.env
 assets/node_modules
 assets/dist
-
+assets/yarn-error.log
+docker/nginx/nginx.conf

@@ -8,8 +8,41 @@ services:
         context: ./app
       command: ['uwsgi', '--socket', '0.0.0.0:8080', '--workers', '4', '--protocol=http', '-w', 'wsgi']
       ports:
-        - '8080:8080'
+        - '8080'
       volumes:
         - ./app:/deploy
       working_dir: /deploy
+      networks:
+        - nginx-network
 
+    assets:
+      container_name: dc-pipedrive-assets
+      build:
+        dockerfile: ../docker/assets/Dockerfile
+        context: ./assets
+      command: ['yarn', 'run', 'build:prod']
+      volumes:
+        - /deploy/node_modules
+        - ./assets:/deploy
+      working_dir: /deploy
+
+    nginx:
+      container_name: dc-pipedrive-nginx
+      image: nginx:1.15
+      volumes:
+        - ./docker/nginx/nginx.conf:/etc/nginx/nginx.conf
+        - ./assets/dist:/assets
+      depends_on:
+        - app
+        - assets
+      links:
+        - app:backend
+      ports:
+        - "80:80"
+      command: ["nginx", "-g", "daemon off;"]
+      networks:
+        - nginx-network
+
+networks:
+    nginx-network:
+      driver: bridge
