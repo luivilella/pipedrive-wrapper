@@ -61,6 +61,9 @@ class Organization(PDBase):
         }
 
     def field_name(self, field_name):
+        if field_name in self.STANDARD_FIELDS:
+            return field_name
+
         field = self._cache_fields_key.get(field_name, {})
         name = field.get('name', field_name)
         if name in self.STANDARD_FIELDS:
