@@ -36,8 +36,8 @@ var app = new Vue({
     loading: false,
     error: null,
     organization_id: null,
-    organization: {},
     fields: [],
+    title: null,
   },
   methods: {
     getOrganization(){
@@ -45,10 +45,16 @@ var app = new Vue({
       this.loading = true;
       this.service.detail(this.organization_id).then(
         response => {
-          this.organization = response.data;
+          let organization = response.data.data;
+          let fields_conf = response.data.fields;
+
+          this.title = organization.name;
           this.fields = [];
-          for(let [name, value] of Object.entries(this.organization)){
-            this.fields.push({name, value});
+          for(let field of fields_conf){
+            this.fields.push({
+              name: field.name,
+              value: organization[field.key]
+            });
           }
           this.loading = false;
         },
@@ -60,8 +66,9 @@ var app = new Vue({
           }
           this.loading = false;
         }
-    );
-    }
+      );
+    },
+
   },
 });
 
