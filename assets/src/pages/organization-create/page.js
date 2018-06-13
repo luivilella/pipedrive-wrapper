@@ -106,21 +106,36 @@ var app = new Vue({
       }
     },
 
-    submit(){
+    isValid(){
       let data = {};
-      let field_type = {};
       for (let field of this.fields){
         field.errors = [];
         if(field.value){
           data[field.key] = field.value;
-          field_type[field.key] = field.field_type;
         }
       }
       let errors = Validate(data, this.formValidator);
       if(Object.keys(errors || {}).length > 0){
         this.setErrors(errors);
         window.scrollTo(0, 0);
+        return false;
+      }
+      return true;
+    },
+
+    submit(){
+      if(!this.isValid()){
         return;
+      }
+
+      let data = {};
+      let field_type = {};
+      for (let field of this.fields){
+        field.errors = [];
+        if(field.value){
+          data[field.name] = field.value;
+          field_type[field.name] = field.field_type;
+        }
       }
 
       this.loading = true;
