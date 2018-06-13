@@ -51,14 +51,10 @@ class Organization(PDBase):
     def _detail_to_dict(self, detail, active_only=True):
         if active_only:
             return {
-                self.field_name(field_key): value
-                for field_key, value in detail.items()
+                field_key: value for field_key, value in detail.items()
                 if self.is_active_field(field_key)
             }
-        return {
-            self.field_name(field_key): value
-            for field_key, value in detail.items()
-        }
+        return detail
 
     def field_name(self, field_name):
         if field_name in self.STANDARD_FIELDS:
