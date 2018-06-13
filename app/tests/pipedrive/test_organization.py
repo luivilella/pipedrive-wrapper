@@ -239,13 +239,13 @@ class TestCreate:
         data = {
             'Name Nice': 'batman is a nice name',
         }
-        expected_value = {'Super ID:': 1, 'Name Nice': 'batman is a nice name'}
+        expected_value = {'id': 1, '#name#': 'batman is a nice name'}
 
         assert org.create(data) == expected_value
 
 
 class TestDetail:
-    def test_returns_fields_with_verbose_name(self):
+    def test_returns_active_fields(self):
         org = Organization(auto_load_fields=False)
 
         name = dict(
@@ -253,7 +253,7 @@ class TestDetail:
             add_visible_flag=True
         )
         _id = dict(
-            id=4, key='id', name='Super ID:',  active_flag=True,
+            id=4, key='id', name='Super ID:',  active_flag=False,
             add_visible_flag=True
         )
         for field in (name, _id):
@@ -263,7 +263,7 @@ class TestDetail:
             data={'id': 1, '#name#': 'batman is a nice name'}
         ))
 
-        expected_value = {'Super ID:': 1, 'Name Nice': 'batman is a nice name'}
+        expected_value = {'#name#': 'batman is a nice name'}
 
         assert org.detail(1) == expected_value
 
@@ -300,11 +300,11 @@ class TestSearch:
 
 
 class TestAll:
-    def test_retuns_organizations_with_verbose_names(self):
+    def test_retuns_organizations(self):
         org = Organization(auto_load_fields=False)
 
         name = dict(
-            id=1, key='#name#', name='Name Nice', active_flag=True,
+            id=1, key='#name#', name='Name Nice', active_flag=False,
             add_visible_flag=True
         )
         _id = dict(
@@ -322,8 +322,8 @@ class TestAll:
         ))
 
         expected_value = [
-            {'Super ID:': 1, 'Name Nice': 'batman is a nice name'},
-            {'Super ID:': 2, 'Name Nice': 'superman'},
+            {'id': 1},
+            {'id': 2},
         ]
 
         assert list(org.all()) == expected_value
