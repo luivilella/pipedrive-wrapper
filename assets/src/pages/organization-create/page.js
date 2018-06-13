@@ -8,7 +8,7 @@ import { ScaleLoader } from 'vue-spinner/dist/vue-spinner.min.js';
 
 import OrganizationService from '../../services/organization';
 import Validate from '../../utils/validator';
-import { ORGANIZATION_DETAIL } from '../../utils/urls';
+import { ORGANIZATION_DETAIL, ORGANIZATION_SEARCH } from '../../utils/urls';
 
 Vue.use(VueResource);
 Vue.use(VueRouter);
@@ -32,6 +32,7 @@ var app = new Vue({
     this.loadFields();
   },
   data: {
+    search_page: ORGANIZATION_SEARCH,
     loading: false,
     error: null,
     formValidator: {},

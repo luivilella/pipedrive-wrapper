@@ -6,6 +6,7 @@ import VueRouter from 'vue-router';
 import { ScaleLoader } from 'vue-spinner/dist/vue-spinner.min.js';
 
 import OrganizationService from '../../services/organization';
+import { ORGANIZATION_SEARCH } from '../../utils/urls';
 
 Vue.use(VueResource);
 Vue.use(VueRouter);
@@ -33,6 +34,7 @@ var app = new Vue({
     }
   },
   data: {
+    search_page: ORGANIZATION_SEARCH,
     loading: false,
     error: null,
     organization_id: null,
