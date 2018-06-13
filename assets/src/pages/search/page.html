@@ -4,9 +4,14 @@
     <head>
         <meta charset="utf-8">
         <title>PipeDrive Search</title>
+        <style>
+            [v-cloak] {
+                display: none;
+            }
+        </style>
     </head>
     <body>
-        <div id="search">
+        <div id="search" v-cloak>
             <div class="alert alert-danger" role="alert" v-if="error">
                 <strong>Error: </strong>{{error}}
             </div>
