@@ -35,7 +35,7 @@ def search():
         response.status = 400
         return dict(success=False, error=str(e))
 
-    return dict(success=True, data=list(organizations))
+    return dict(success=True, data=organizations)
 
 
 @app.route('/organizations', method='POST')
@@ -62,19 +62,23 @@ def create():
 def detail(organization_id):
     try:
         organization = service.detail(organization_id)
+        fields = list(service.fields())
     except ConnectionError as e:
         response.status = 400
         return dict(success=False, error=str(e))
 
-    return dict(success=True, data=organization)
+    return dict(
+        success=True,
+        data=dict(data=organization, fields=fields)
+    )
 
 
 @app.route('/organizations-fields', method='GET')
 def fields():
     try:
-        fields = service.fields()
+        fields = list(service.fields())
     except ConnectionError as e:
         response.status = 400
         return dict(success=False, error=str(e))
 
-    return dict(success=True, data=list(fields))
+    return dict(success=True, data=fields)
